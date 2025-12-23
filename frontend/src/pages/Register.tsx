@@ -13,11 +13,6 @@ export default function RegisterPage() {
 
   const displayError = localError || authError;
 
-  useEffect(() => {
-    if (authError) {
-      console.log('Auth error:', authError);
-    }
-  }, [authError]);
 
   const validatePassword = (pwd: string): string | null => {
     if (pwd.length < 6) {
@@ -102,7 +97,6 @@ export default function RegisterPage() {
               value={name}
               onChange={(e) => {
                 setName(e.target.value);
-                setLocalError('');
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               placeholder="请输入用户名"
@@ -121,7 +115,6 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setLocalError('');
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               placeholder="example@domain.com"
@@ -140,7 +133,6 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setLocalError('');
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               placeholder="至少 6 个字符，包含大写字母和数字"
@@ -162,7 +154,6 @@ export default function RegisterPage() {
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
-                setLocalError('');
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               placeholder="再次输入密码"
