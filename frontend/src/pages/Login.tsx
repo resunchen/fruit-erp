@@ -9,16 +9,8 @@ export default function LoginPage() {
   const { login, isLoading, error: authError } = useAuth();
   const navigate = useNavigate();
 
-  // 合并本地和认证错误，但不自动清除
+  // 合并本地和认证错误
   const displayError = localError || authError;
-
-  // 监听认证错误的变化
-  useEffect(() => {
-    if (authError) {
-      // 认证错误发生时，保持显示
-      console.log('Auth error:', authError);
-    }
-  }, [authError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,7 +61,6 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                setLocalError('');
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="admin@test.com"
@@ -88,7 +79,6 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setLocalError('');
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="••••••••"

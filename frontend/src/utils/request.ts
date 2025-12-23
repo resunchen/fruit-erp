@@ -32,12 +32,13 @@ export async function request<T = any>(
   const result = await response.json();
 
   if (!response.ok) {
-    if (response.status === 401) {
-      // Handle token expiration
+    const errorMessage = result.message || 'API request failed';
+    // Only redirect to login for token expiration (existing token in localStorage)
+    if (response.status === 401 && localStorage.getItem('token')) {
       localStorage.removeItem('token');
       window.location.href = '/login';
     }
-    throw new Error(result.message || 'API request failed');
+    throw new Error(errorMessage);
   }
 
   return result;

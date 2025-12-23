@@ -33,6 +33,7 @@ export const useAuth = () => {
       const response = await authService.login(data);
       setUser(response.user);
       setToken(response.token);
+      setError(null);
       return response;
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed';
