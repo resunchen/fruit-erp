@@ -4,17 +4,19 @@ export interface User {
   name: string;
   avatar?: string;
   role?: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface AuthData {
+  user: User;
+  token: string;
+  refreshToken?: string;
 }
 
 export interface AuthResponse {
   code: number;
-  data: {
-    user: User;
-    token: string;
-    refreshToken?: string;
-  };
+  data: AuthData;
   message: string;
 }
 

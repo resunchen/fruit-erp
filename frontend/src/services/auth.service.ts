@@ -1,13 +1,15 @@
 import { post, get } from '../utils/request';
-import { User, LoginRequest, RegisterRequest, AuthResponse } from '../types/auth';
+import type { User, LoginRequest, RegisterRequest, AuthData } from '../types/auth';
 
 export const authService = {
-  register: async (data: RegisterRequest): Promise<AuthResponse> => {
-    return post<AuthResponse>('/api/v1/auth/register', data).then(res => res.data);
+  register: async (data: RegisterRequest): Promise<AuthData> => {
+    const res = await post<AuthData>('/api/v1/auth/register', data);
+    return res.data;
   },
 
-  login: async (data: LoginRequest): Promise<AuthResponse> => {
-    return post<AuthResponse>('/api/v1/auth/login', data).then(res => res.data);
+  login: async (data: LoginRequest): Promise<AuthData> => {
+    const res = await post<AuthData>('/api/v1/auth/login', data);
+    return res.data;
   },
 
   logout: async (): Promise<void> => {

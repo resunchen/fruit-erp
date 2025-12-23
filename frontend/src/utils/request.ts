@@ -1,4 +1,4 @@
-import { ApiResponse } from '../types/common';
+import type { ApiResponse } from '../types/common';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -12,9 +12,9 @@ export async function request<T = any>(
 ): Promise<ApiResponse<T>> {
   const { data, ...fetchOptions } = options;
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...fetchOptions.headers,
+    ...(fetchOptions.headers as Record<string, string>),
   };
 
   // Add token to headers if exists

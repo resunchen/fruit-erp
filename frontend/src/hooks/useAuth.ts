@@ -1,6 +1,6 @@
 import { useAuthStore } from '../store/authStore';
 import { authService } from '../services/auth.service';
-import { User, LoginRequest, RegisterRequest } from '../types/auth';
+import type { LoginRequest, RegisterRequest } from '../types/auth';
 
 export const useAuth = () => {
   const { user, token, isLoading, error, setUser, setToken, setLoading, setError, logout } = useAuthStore();
