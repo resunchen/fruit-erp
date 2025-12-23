@@ -1,9 +1,25 @@
+import { useEffect } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { authService } from '../services/auth.service';
 import type { LoginRequest, RegisterRequest } from '../types/auth';
 
 export const useAuth = () => {
   const { user, token, isLoading, error, setUser, setToken, setLoading, setError, logout } = useAuthStore();
+
+  // Load user info when token exists but user is not loaded
+  useEffect(() => {
+    if (token && !user) {
+      authService.getMe()
+        .then((userData) => {
+          setUser(userData);
+        })
+        .catch((err) => {
+          console.error('Failed to load user:', err);
+          // If token is invalid, logout
+          logout();
+        });
+    }
+  }, [token, user, setUser, logout]);
 
   const login = async (data: LoginRequest) => {
     setLoading(true);

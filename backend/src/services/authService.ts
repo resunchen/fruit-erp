@@ -20,7 +20,7 @@ export const authService = {
       .single();
 
     if (existingUser) {
-      throw new AppError('User already exists', 400, 400);
+      throw new AppError('该邮箱已被注册，请使用其他邮箱或直接登录', 400, 400);
     }
 
     // Hash password and create user
@@ -39,7 +39,7 @@ export const authService = {
       .single();
 
     if (error || !newUser) {
-      throw new AppError('Failed to create user', 500, 500);
+      throw new AppError('注册失败，请稍后重试', 500, 500);
     }
 
     const token = generateToken({
@@ -62,12 +62,12 @@ export const authService = {
       .single();
 
     if (error || !user) {
-      throw new AppError('Invalid email or password', 401, 401);
+      throw new AppError('邮箱或密码错误，请检查后重试', 401, 401);
     }
 
     const isPasswordValid = await comparePassword(password, user.password);
     if (!isPasswordValid) {
-      throw new AppError('Invalid email or password', 401, 401);
+      throw new AppError('邮箱或密码错误，请检查后重试', 401, 401);
     }
 
     const token = generateToken({
@@ -95,7 +95,7 @@ export const authService = {
       .single();
 
     if (error || !user) {
-      throw new AppError('User not found', 404, 404);
+      throw new AppError('用户信息加载失败，请重新登录', 404, 404);
     }
 
     return user;
