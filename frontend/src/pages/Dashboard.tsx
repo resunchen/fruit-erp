@@ -1,4 +1,5 @@
 import { useAuth } from '../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export default function DashboardPage() {
   const { user, logout, isLoading } = useAuth();
@@ -72,11 +73,38 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">欢迎使用水果供应链管理系统</h3>
           <p className="text-blue-800">
-            这是项目的初始化版本，核心认证系统已完成。更多功能开发中...
+            这是项目的第2周版本，现已支持供应商管理功能。
           </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Link to="/suppliers" className="block">
+            <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow cursor-pointer">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">供应商管理</h3>
+              <p className="text-gray-600 text-sm">
+                管理供应商信息，包括基本信息、联系方式等
+              </p>
+              <div className="mt-4 flex items-center text-blue-600">
+                <span className="text-sm font-medium">进入供应商管理</span>
+                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+          </Link>
+
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">采购订单</h3>
+            <p className="text-gray-600 text-sm">
+              即将上线，敬请期待...
+            </p>
+            <div className="mt-4 flex items-center text-gray-400">
+              <span className="text-sm font-medium">开发中</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

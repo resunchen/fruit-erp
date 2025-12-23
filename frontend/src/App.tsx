@@ -6,6 +6,7 @@ import { authService } from './services/auth.service';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import DashboardPage from './pages/Dashboard';
+import SupplierListPage from './pages/suppliers/SupplierList';
 import NotFoundPage from './pages/NotFound';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -42,6 +43,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/suppliers"
+          element={
+            <ProtectedRoute>
+              <SupplierListPage />
             </ProtectedRoute>
           }
         />
