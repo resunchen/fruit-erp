@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
@@ -6,11 +6,19 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [localError, setLocalError] = useState('');
-  const { login, isLoading, error } = useAuth();
+  const { login, isLoading, error: authError } = useAuth();
   const navigate = useNavigate();
 
-  // Display either local validation errors or auth errors
-  const displayError = localError || error;
+  // 合并本地和认证错误，但不自动清除
+  const displayError = localError || authError;
+
+  // 监听认证错误的变化
+  useEffect(() => {
+    if (authError) {
+      // 认证错误发生时，保持显示
+      console.log('Auth error:', authError);
+    }
+  }, [authError]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,10 +40,12 @@ export default function LoginPage() {
 
     try {
       await login({ email, password });
+      // 登录成功，导航到仪表板
       navigate('/dashboard');
     } catch (err) {
-      // Error is already set by useAuth hook
-      console.error('Login error:', err);
+      // 错误已经由 useAuth hook 的 setError 设置
+      // 这里只需要捕获异常防止未捕获的错误
+      console.error('Login failed:', err);
     }
   };
 
@@ -87,8 +97,8 @@ export default function LoginPage() {
           </div>
 
           {displayError && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex gap-3">
-              <div className="flex-shrink-0 text-red-600">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex gap-3 animate-pulse">
+              <div className="flex-shrink-0 text-red-600 mt-0.5">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>

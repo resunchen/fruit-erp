@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useAuthStore } from '../store/authStore';
 import { authService } from '../services/auth.service';
 import type { LoginRequest, RegisterRequest } from '../types/auth';
 
 export const useAuth = () => {
   const { user, token, isLoading, error, setUser, setToken, setLoading, setError, logout } = useAuthStore();
+
+  // Stable logout callback
+  const handleLogout = useCallback(() => {
+    logout();
+  }, [logout]);
 
   // Load user info when token exists but user is not loaded
   useEffect(() => {
@@ -16,12 +21,12 @@ export const useAuth = () => {
         .catch((err) => {
           console.error('Failed to load user:', err);
           // If token is invalid, logout
-          logout();
+          handleLogout();
         });
     }
-  }, [token, user, setUser, logout]);
+  }, [token, user, setUser, handleLogout]);
 
-  const login = async (data: LoginRequest) => {
+  const login = useCallback(async (data: LoginRequest) => {
     setLoading(true);
     setError(null);
     try {
@@ -36,9 +41,9 @@ export const useAuth = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setUser, setToken, setLoading, setError]);
 
-  const register = async (data: RegisterRequest) => {
+  const register = useCallback(async (data: RegisterRequest) => {
     setLoading(true);
     setError(null);
     try {
@@ -53,17 +58,17 @@ export const useAuth = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setUser, setToken, setLoading, setError]);
 
-  const handleLogout = async () => {
+  const logoutAsync = useCallback(async () => {
     try {
       await authService.logout();
     } catch (err) {
       console.error('Logout error:', err);
     } finally {
-      logout();
+      handleLogout();
     }
-  };
+  }, [handleLogout]);
 
   return {
     user,
@@ -72,7 +77,7 @@ export const useAuth = () => {
     error,
     login,
     register,
-    logout: handleLogout,
+    logout: logoutAsync,
     isAuthenticated: !!token && !!user,
   };
 };
