@@ -76,7 +76,7 @@ export default function DashboardPage() {
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
           <h3 className="text-lg font-semibold text-blue-900 mb-2">欢迎使用水果供应链管理系统</h3>
           <p className="text-blue-800">
-            这是项目的第2周版本，现已支持供应商管理功能。
+            这是项目的第2周版本，现已支持供应商管理和采购订单功能。
           </p>
         </div>
 
@@ -99,10 +99,15 @@ export default function DashboardPage() {
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">采购订单</h3>
             <p className="text-gray-600 text-sm">
-              即将上线，敬请期待...
+              管理采购订单，创建和跟踪订单状态
             </p>
-            <div className="mt-4 flex items-center text-gray-400">
-              <span className="text-sm font-medium">开发中</span>
+            <div className="mt-4 flex items-center text-blue-600">
+              <Link to="/purchase-orders" className="text-sm font-medium hover:underline">
+                进入采购订单
+              </Link>
+              <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </div>
           </div>
         </div>

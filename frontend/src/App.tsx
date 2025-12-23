@@ -7,6 +7,7 @@ import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
 import DashboardPage from './pages/Dashboard';
 import SupplierListPage from './pages/suppliers/SupplierList';
+import PurchaseOrderListPage from './pages/purchaseOrders/PurchaseOrderList';
 import NotFoundPage from './pages/NotFound';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -51,6 +52,14 @@ function App() {
           element={
             <ProtectedRoute>
               <SupplierListPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/purchase-orders"
+          element={
+            <ProtectedRoute>
+              <PurchaseOrderListPage />
             </ProtectedRoute>
           }
         />

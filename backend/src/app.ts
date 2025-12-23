@@ -7,6 +7,7 @@ import { authMiddleware } from './middleware/auth.middleware';
 import { authController } from './controllers/authController';
 import authRoutes from './routes/auth.routes';
 import supplierRoutes from './routes/supplier.routes';
+import purchaseOrderRoutes from './routes/purchaseOrder.routes';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
 // Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/suppliers', authMiddleware, supplierRoutes);
+app.use('/api/v1/purchase/orders', authMiddleware, purchaseOrderRoutes);
 
 // Protected routes
 app.get('/api/v1/users/me', authMiddleware, authController.getMe);
