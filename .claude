@@ -1,0 +1,369 @@
+{
+  "version": "1.0",
+  "name": "水果供应链全流程管理系统",
+  "description": "一个完整的水果供应链管理系统，覆盖采购、运输、仓储、打包发货全流程。技术栈：React + Node.js + Supabase。",
+
+  "projectContext": {
+    "type": "fullstack",
+    "duration": "12 weeks",
+    "team": "multi-person",
+    "status": "planning"
+  },
+
+  "technology": {
+    "frontend": {
+      "framework": "React 18",
+      "language": "TypeScript",
+      "styling": "Tailwind CSS",
+      "components": "shadcn/ui",
+      "state": "Zustand",
+      "dataFetching": "TanStack Query",
+      "build": "Vite"
+    },
+    "backend": {
+      "runtime": "Node.js",
+      "framework": "Express.js",
+      "language": "TypeScript",
+      "database": "Supabase (PostgreSQL)",
+      "auth": "Supabase Auth + JWT"
+    },
+    "devTools": "ESLint, Prettier, TypeScript"
+  },
+
+  "rules": [
+    {
+      "name": "【开发流程】每次开发前必须创建或打开 TODO 文档",
+      "description": "开发任何功能前，必须打开对应的 TODO 文档。文档位置：TODO/TODO_P1_Week[N]_[模块名]_[N].md",
+      "priority": "critical",
+      "examples": [
+        "第 1 周：打开 TODO_P1_Week1_项目初始化_01.md",
+        "第 2 周：打开 TODO_P1_Week2_采购管理_02.md",
+        "开发前：完整阅读功能清单、技术要点、API 设计"
+      ]
+    },
+
+    {
+      "name": "【任务追踪】每完成一个功能点就勾选 TODO 中的复选框",
+      "description": "在 TODO 文档中，功能完成后将 '- [ ]' 改为 '- [x]' 来标记完成。",
+      "priority": "critical",
+      "examples": [
+        "未完成：- [ ] 供应商增删改查功能",
+        "已完成：- [x] 供应商增删改查功能"
+      ]
+    },
+
+    {
+      "name": "【Git 提交】遵循 commit message 规范",
+      "description": "提交规范：<type>(<scope>): <subject>。必须关联 TODO 文档。",
+      "priority": "high",
+      "examples": [
+        "✅ feat(supplier): 实现供应商管理增删改查",
+        "✅ fix(cost): 修复批次成本计算错误",
+        "❌ update code（太模糊）",
+        "❌ 修改文件（没有规范）"
+      ]
+    },
+
+    {
+      "name": "【代码标准】前端代码规范",
+      "description": "React 组件遵循函数式、TypeScript 类型完整、使用 Tailwind CSS 和 shadcn/ui。",
+      "priority": "high",
+      "rules": [
+        "文件名：PascalCase (e.g., PurchaseOrderForm.tsx)",
+        "函数/变量：camelCase (e.g., calculateCost)",
+        "常量：UPPER_SNAKE_CASE (e.g., API_BASE_URL)",
+        "必须有 TypeScript 类型定义（禁止 any）",
+        "优先使用 Tailwind CSS，复杂样式用 CSS Module",
+        "使用 shadcn/ui 组件，不要自己造轮子"
+      ]
+    },
+
+    {
+      "name": "【代码标准】后端代码规范",
+      "description": "Node.js + Express 遵循分层架构、全量 TypeScript 类型。",
+      "priority": "high",
+      "rules": [
+        "文件名：camelCase (e.g., purchaseController.ts)",
+        "类名：PascalCase (e.g., PurchaseService)",
+        "分层架构：Controller → Service → Repository",
+        "必须有完善的错误处理和日志",
+        "API 路由：/api/v1/resource (e.g., /api/v1/purchase/orders)",
+        "响应格式：{ code, data, message }"
+      ]
+    },
+
+    {
+      "name": "【代码标准】数据库规范",
+      "description": "Supabase PostgreSQL 遵循命名规范、RLS 安全策略。",
+      "priority": "high",
+      "rules": [
+        "表名：snake_case 复数 (e.g., purchase_orders)",
+        "字段名：snake_case (e.g., supplier_id)",
+        "主键：id (UUID)",
+        "外键：{table}_id (e.g., supplier_id)",
+        "时间戳：created_at, updated_at (TIMESTAMPTZ)",
+        "必须配置 RLS（行级安全）策略"
+      ]
+    },
+
+    {
+      "name": "【质量要求】代码提交前必须通过检查",
+      "description": "代码提交前必须满足以下条件。",
+      "priority": "critical",
+      "checklist": [
+        "□ ESLint 通过（npm run lint，零警告）",
+        "□ TypeScript 编译通过（零错误和警告）",
+        "□ 单元测试通过（覆盖率 ≥ 70%）",
+        "□ 集成测试通过",
+        "□ API 文档已更新",
+        "□ 在 TODO 中勾选了此功能点",
+        "□ Git commit message 遵循规范"
+      ]
+    },
+
+    {
+      "name": "【文档要求】API 和代码文档完整",
+      "description": "每个 API 和函数都需要有清晰的文档说明。",
+      "priority": "high",
+      "rules": [
+        "API：必须在 Swagger 文档中注册",
+        "函数：重要函数需要 JSDoc 注释",
+        "类型：TypeScript 接口需要清晰定义",
+        "README：每个模块完成后补充使用文档"
+      ]
+    },
+
+    {
+      "name": "【周度管理】每周末更新 TODO 完成情况",
+      "description": "每周末必须更新 TODO 文档的'完成情况'部分，记录实际完成时间和问题。",
+      "priority": "high",
+      "format": {
+        "开始时间": "YYYY-MM-DD HH:MM",
+        "完成时间": "YYYY-MM-DD HH:MM",
+        "状态": "进行中 / 已完成",
+        "问题记录": "遇到的技术问题和解决方案"
+      }
+    },
+
+    {
+      "name": "【进度归档】完成的 TODO 需要归档",
+      "description": "周期完成后，将完成的 TODO 文档移到 TODO/COMPLETED/ 文件夹，保留完整记录。",
+      "priority": "medium"
+    },
+
+    {
+      "name": "【文件结构】前端和后端的项目结构规范",
+      "description": "遵循指定的文件夹组织结构，便于查找和维护。",
+      "priority": "high",
+      "frontend": {
+        "components": "按模块分文件夹 (purchase/, warehouse/ 等)",
+        "pages": "页面级组件",
+        "hooks": "自定义 Hook",
+        "services": "API 请求服务",
+        "types": "TypeScript 类型定义",
+        "utils": "工具函数和帮助函数"
+      },
+      "backend": {
+        "controllers": "请求处理层",
+        "services": "业务逻辑层",
+        "repositories": "数据访问层",
+        "routes": "API 路由定义",
+        "middleware": "中间件",
+        "types": "TypeScript 类型定义"
+      }
+    },
+
+    {
+      "name": "【分支管理】Git 分支规范",
+      "description": "创建分支时遵循命名规范，方便追踪功能开发。",
+      "priority": "medium",
+      "examples": [
+        "feature/purchase-order-management",
+        "bugfix/cost-calculation",
+        "refactor/error-handling",
+        "docs/api-documentation"
+      ]
+    },
+
+    {
+      "name": "【测试要求】单元和集成测试",
+      "description": "必须编写测试，确保代码质量和功能正确性。",
+      "priority": "high",
+      "targets": [
+        "单元测试覆盖率 ≥ 70%",
+        "关键功能必须有集成测试",
+        "异常情况必须有测试覆盖"
+      ]
+    },
+
+    {
+      "name": "【性能要求】系统性能指标",
+      "description": "系统必须达到以下性能要求。",
+      "priority": "high",
+      "metrics": {
+        "页面加载时间": "≤ 2 秒",
+        "扫码识别响应": "≤ 0.5 秒",
+        "报表生成时间": "≤ 5 秒",
+        "并发用户": "≥ 50",
+        "系统可用性": "≥ 99.5%"
+      }
+    },
+
+    {
+      "name": "【安全要求】数据安全和访问控制",
+      "description": "必须实现安全的认证、授权和数据保护。",
+      "priority": "critical",
+      "requirements": [
+        "用户认证：JWT Token + 会话管理",
+        "权限控制：RLS（行级安全）+ API 授权",
+        "数据加密：敏感数据加密存储",
+        "日志记录：完整的操作审计日志",
+        "输入验证：所有用户输入必须验证"
+      ]
+    },
+
+    {
+      "name": "【环境配置】开发/测试/生产环境分离",
+      "description": "必须使用 .env 文件管理环境变量，不能硬编码。",
+      "priority": "high",
+      "rules": [
+        "创建 .env.example 文件作为模板",
+        "不提交 .env 文件到版本控制",
+        "不同环境使用不同的配置",
+        "敏感信息（密钥、密码）必须用环境变量"
+      ]
+    }
+  ],
+
+  "conventions": {
+    "naming": {
+      "frontend": {
+        "components": "PascalCase",
+        "functions": "camelCase",
+        "constants": "UPPER_SNAKE_CASE",
+        "interfaces": "PascalCase (带 I 前缀可选)",
+        "classes": "PascalCase"
+      },
+      "backend": {
+        "files": "camelCase",
+        "classes": "PascalCase",
+        "methods": "camelCase",
+        "constants": "UPPER_SNAKE_CASE",
+        "routes": "/api/v1/resource"
+      },
+      "database": {
+        "tables": "snake_case (复数)",
+        "columns": "snake_case",
+        "indexes": "idx_[table]_[column]"
+      }
+    },
+
+    "commenting": {
+      "rule": "只注释为什么，不注释做什么",
+      "examples": [
+        "✅ // 使用乐观锁防止并发修改",
+        "❌ // count++ 将 count 加 1"
+      ]
+    },
+
+    "errorHandling": {
+      "frontend": "try-catch + Error Boundaries",
+      "backend": "全局错误处理中间件 + 统一错误响应格式"
+    }
+  },
+
+  "tools": {
+    "versionControl": "Git",
+    "documentation": "Markdown",
+    "apiDocs": "Swagger/OpenAPI",
+    "testing": "Vitest (前端) / Jest (后端)",
+    "linting": "ESLint + Prettier"
+  },
+
+  "resources": [
+    {
+      "name": "项目文档",
+      "items": [
+        "README.md - 项目主文档（你正在读）",
+        "START_HERE.md - 新手快速导航",
+        "DEVELOPMENT_PLAN.md - 完整 12 周开发计划",
+        "DEVELOPMENT_STANDARDS.md - 详细开发规范",
+        "QUICK_REFERENCE.md - 快速查询表"
+      ]
+    },
+    {
+      "name": "周度 TODO",
+      "items": [
+        "TODO_P1_Week1_项目初始化_01.md",
+        "TODO_P1_Week2_采购管理_02.md",
+        "TODO_P1_Week3_仓储发货_03.md",
+        "TODO_P1_Week4_成本核算与集成_04.md"
+      ]
+    },
+    {
+      "name": "官方文档",
+      "items": [
+        "React: https://react.dev/",
+        "TypeScript: https://www.typescriptlang.org/",
+        "Tailwind CSS: https://tailwindcss.com/",
+        "shadcn/ui: https://ui.shadcn.com/",
+        "Supabase: https://supabase.com/docs",
+        "Express: https://expressjs.com/"
+      ]
+    }
+  ],
+
+  "workflow": {
+    "dailyRoutine": [
+      "1. 打开当周的 TODO 文档",
+      "2. 明确今天要完成的功能点",
+      "3. 实现功能点（后端 API → 前端界面 → 数据库 → 测试）",
+      "4. 每完成 1-2 个功能点就 Git commit 一次",
+      "5. 确保通过 ESLint、TypeScript、测试检查"
+    ],
+    "weeklyRoutine": [
+      "1-4. 按照 TODO 逐日完成功能点",
+      "5. 周末：更新 TODO '完成情况'部分",
+      "6. 周末：整理本周问题和改进建议",
+      "7. 周末：准备周报（完成度、问题、后续计划）"
+    ]
+  },
+
+  "qualityChecklist": [
+    "✅ 代码规范检查（ESLint）",
+    "✅ 类型检查（TypeScript）",
+    "✅ 单元测试（覆盖率 ≥ 70%）",
+    "✅ 集成测试通过",
+    "✅ API 文档更新",
+    "✅ 在 TODO 中勾选功能点",
+    "✅ Git commit 规范",
+    "✅ Code Review（如适用）"
+  ],
+
+  "commandsQuickAccess": {
+    "frontend": {
+      "install": "npm install",
+      "dev": "npm run dev",
+      "build": "npm run build",
+      "lint": "npm run lint",
+      "test": "npm run test"
+    },
+    "backend": {
+      "install": "npm install",
+      "dev": "npm run dev",
+      "build": "npm run build",
+      "lint": "npm run lint",
+      "test": "npm run test"
+    }
+  },
+
+  "notes": [
+    "这是一个完整的水果供应链管理系统项目",
+    "总开发周期：12 周，分为 4 个优先级（P1-P4）",
+    "核心模块：13 个，功能点：150+",
+    "必须遵循规范：编码、提交、测试、文档",
+    "质量要求：ESLint 零警告、TypeScript 零错误、测试覆盖率 ≥ 70%",
+    "团队协作：统一规范、清晰的 TODO 追踪、每周进度同步",
+    "推荐入门流程：START_HERE → README_DEV_GUIDE → DEVELOPMENT_STANDARDS → 开始第 1 周 TODO"
+  ]
+}
