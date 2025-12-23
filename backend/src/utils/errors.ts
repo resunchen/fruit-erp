@@ -20,9 +20,9 @@ export class AppError extends Error implements ApiError {
 
 export const errorHandler = (
   err: Error | AppError,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   if (err instanceof AppError) {
     return res.status(err.status).json({
@@ -32,6 +32,7 @@ export const errorHandler = (
     });
   }
 
+  // eslint-disable-next-line no-console
   console.error('Unexpected error:', err);
 
   return res.status(500).json({

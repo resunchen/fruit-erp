@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import { specs } from './config/swagger';
 import { errorHandler } from './utils/errors';
 import { authMiddleware } from './middleware/auth.middleware';
 import { authController } from './controllers/authController';
@@ -15,6 +17,13 @@ app.use(cors({
   credentials: true,
 }));
 
+// API Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
+  swaggerOptions: {
+    persistAuthorization: true,
+  },
+}));
+
 // Routes
 app.use('/api/v1/auth', authRoutes);
 
@@ -22,7 +31,7 @@ app.use('/api/v1/auth', authRoutes);
 app.get('/api/v1/users/me', authMiddleware, authController.getMe);
 
 // Health check
-app.get('/health', (req, res) => {
+app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });
 });
 

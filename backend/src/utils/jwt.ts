@@ -11,7 +11,7 @@ export const generateToken = (payload: JwtPayload): string => {
   // expiresIn is a string like '7d'
   return jwt.sign(payload, config.jwt.secret, {
     expiresIn: config.jwt.expiresIn,
-  } as any);
+  } as jwt.SignOptions);
 };
 
 export const verifyToken = (token: string): JwtPayload => {

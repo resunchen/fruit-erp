@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 export default function LoginPage() {
@@ -133,6 +133,15 @@ export default function LoginPage() {
           <p className="font-medium mb-2">测试账号：</p>
           <p>邮箱：<code className="bg-blue-100 px-2 py-1 rounded">admin@test.com</code></p>
           <p>密码：<code className="bg-blue-100 px-2 py-1 rounded">admin123456</code></p>
+        </div>
+
+        <div className="mt-6 text-center">
+          <p className="text-gray-600">
+            还没有账号？{' '}
+            <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">
+              立即注册
+            </Link>
+          </p>
         </div>
       </div>
     </div>

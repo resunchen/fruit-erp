@@ -4,6 +4,7 @@ import { useAuthStore } from './store/authStore';
 import { authService } from './services/auth.service';
 
 import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
 import DashboardPage from './pages/Dashboard';
 import NotFoundPage from './pages/NotFound';
 
@@ -35,6 +36,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route
           path="/dashboard"
           element={
