@@ -7,6 +7,7 @@ declare global {
   namespace Express {
     interface Request {
       user?: JwtPayload;
+      userId?: string;
     }
   }
 }
@@ -23,6 +24,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     const decoded = verifyToken(token);
 
     req.user = decoded;
+    req.userId = decoded.userId; // Set userId from JWT payload
     next();
   } catch (error) {
     if (error instanceof AppError) {

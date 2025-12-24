@@ -26,47 +26,52 @@ export const purchaseOrderService = {
     if (filters?.end_date) params.append('end_date', filters.end_date);
 
     const queryString = params.toString();
-    const url = `/purchase/orders${queryString ? `?${queryString}` : ''}`;
+    const url = `/api/v1/purchase/orders${queryString ? `?${queryString}` : ''}`;
 
-    return request(url, {
+    const response = await request<PurchaseOrderListResponse>(url, {
       method: 'GET',
     });
+
+    return response.data;
   },
 
   /**
    * 获取采购订单详情
    */
   async getOrder(id: string): Promise<PurchaseOrderDetail> {
-    return request(`/purchase/orders/${id}`, {
+    const response = await request<PurchaseOrderDetail>(`/api/v1/purchase/orders/${id}`, {
       method: 'GET',
     });
+    return response.data;
   },
 
   /**
    * 创建采购订单
    */
   async createOrder(data: CreatePurchaseOrderRequest): Promise<PurchaseOrder> {
-    return request('/purchase/orders', {
+    const response = await request<PurchaseOrder>('/api/v1/purchase/orders', {
       method: 'POST',
       body: JSON.stringify(data),
     });
+    return response.data;
   },
 
   /**
    * 更新采购订单
    */
   async updateOrder(id: string, data: UpdatePurchaseOrderRequest): Promise<PurchaseOrder> {
-    return request(`/purchase/orders/${id}`, {
+    const response = await request<PurchaseOrder>(`/api/v1/purchase/orders/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
     });
+    return response.data;
   },
 
   /**
    * 删除采购订单
    */
   async deleteOrder(id: string): Promise<void> {
-    return request(`/purchase/orders/${id}`, {
+    await request(`/api/v1/purchase/orders/${id}`, {
       method: 'DELETE',
     });
   },

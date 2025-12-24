@@ -8,6 +8,8 @@ import RegisterPage from './pages/Register';
 import DashboardPage from './pages/Dashboard';
 import SupplierListPage from './pages/suppliers/SupplierList';
 import PurchaseOrderListPage from './pages/purchaseOrders/PurchaseOrderList';
+import PurchaseOrderDetailPage from './pages/purchaseOrders/PurchaseOrderDetail';
+import PurchaseOrderAICreatePage from './pages/purchaseOrders/PurchaseOrderAICreate';
 import NotFoundPage from './pages/NotFound';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -60,6 +62,22 @@ function App() {
           element={
             <ProtectedRoute>
               <PurchaseOrderListPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/purchase-orders/:id"
+          element={
+            <ProtectedRoute>
+              <PurchaseOrderDetailPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/purchase-orders/ai/create"
+          element={
+            <ProtectedRoute>
+              <PurchaseOrderAICreatePage />
             </ProtectedRoute>
           }
         />

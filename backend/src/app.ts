@@ -8,6 +8,9 @@ import { authController } from './controllers/authController';
 import authRoutes from './routes/auth.routes';
 import supplierRoutes from './routes/supplier.routes';
 import purchaseOrderRoutes from './routes/purchaseOrder.routes';
+import aiParseRoutes from './routes/aiParse.routes';
+import warehouseRoutes from './routes/warehouse.routes';
+import shippingRoutes from './routes/shipping.routes';
 
 const app = express();
 
@@ -30,6 +33,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/suppliers', authMiddleware, supplierRoutes);
 app.use('/api/v1/purchase/orders', authMiddleware, purchaseOrderRoutes);
+app.use('/api/v1/ai', authMiddleware, aiParseRoutes);
+app.use('/api/v1/warehouse', authMiddleware, warehouseRoutes);
+app.use('/api/v1/shipping', authMiddleware, shippingRoutes);
 
 // Protected routes
 app.get('/api/v1/users/me', authMiddleware, authController.getMe);

@@ -23,25 +23,47 @@ export async function request<T = any>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${url}`, {
-    ...fetchOptions,
-    headers,
-    body: data ? JSON.stringify(data) : undefined,
-  });
+  try {
+    const response = await fetch(`${API_BASE_URL}${url}`, {
+      ...fetchOptions,
+      headers,
+      body: data ? JSON.stringify(data) : undefined,
+    });
 
-  const result = await response.json();
+    // Handle non-JSON responses (network errors, HTML error pages, etc.)
+    const contentType = response.headers.get('content-type');
+    let result: any;
 
-  if (!response.ok) {
-    const errorMessage = result.message || 'API request failed';
-    // Only redirect to login for token expiration (existing token in localStorage)
-    if (response.status === 401 && localStorage.getItem('token')) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+    if (contentType && contentType.includes('application/json')) {
+      result = await response.json();
+    } else {
+      const text = await response.text();
+      // If response is not JSON, create a proper error response
+      if (!response.ok) {
+        throw new Error(
+          `Server error (${response.status}): ${text.substring(0, 100) || 'No response body'}`
+        );
+      }
+      // For non-JSON but successful responses, return a default structure
+      result = { code: response.status, data: null, message: 'Success' };
     }
+
+    if (!response.ok) {
+      const errorMessage = result.message || `API request failed (${response.status})`;
+      // Only redirect to login for token expiration (existing token in localStorage)
+      if (response.status === 401 && localStorage.getItem('token')) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }
+      throw new Error(errorMessage);
+    }
+
+    return result;
+  } catch (err) {
+    // Handle network errors, parsing errors, etc.
+    const errorMessage = err instanceof Error ? err.message : 'Network request failed';
     throw new Error(errorMessage);
   }
-
-  return result;
 }
 
 export async function get<T>(url: string) {

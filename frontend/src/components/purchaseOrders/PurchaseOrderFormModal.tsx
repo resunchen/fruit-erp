@@ -9,6 +9,7 @@ interface PurchaseOrderFormModalProps {
   onClose: () => void;
   onSubmit: (data: PurchaseOrderFormData) => Promise<void>;
   isLoading?: boolean;
+  editingOrder?: any; // PurchaseOrderDetail
 }
 
 export function PurchaseOrderFormModal({
@@ -16,6 +17,7 @@ export function PurchaseOrderFormModal({
   onClose,
   onSubmit,
   isLoading,
+  editingOrder,
 }: PurchaseOrderFormModalProps) {
   const [formData, setFormData] = useState<PurchaseOrderFormData>({
     supplier_id: '',
@@ -53,7 +55,7 @@ export function PurchaseOrderFormModal({
     loadSuppliers();
   }, [isOpen]);
 
-  // 重置表单
+  // 初始化或重置表单
   useEffect(() => {
     if (!isOpen) {
       setFormData({
@@ -69,8 +71,23 @@ export function PurchaseOrderFormModal({
         costs: [],
       });
       setError('');
+    } else if (editingOrder) {
+      // 编辑模式：加载订单数据
+      setFormData({
+        supplier_id: editingOrder.supplier_id || '',
+        items: editingOrder.items || [
+          {
+            product_name: '',
+            quantity: 1,
+            unit: '',
+            unit_price: 0,
+          },
+        ],
+        costs: editingOrder.costs || [],
+      });
+      setError('');
     }
-  }, [isOpen]);
+  }, [isOpen, editingOrder]);
 
   const validateForm = (): boolean => {
     if (!formData.supplier_id) {
@@ -210,7 +227,7 @@ export function PurchaseOrderFormModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="新增采购订单"
+      title={editingOrder ? '编辑采购订单' : '新增采购订单'}
       width="max-w-4xl"
       footer={
         <div className="flex justify-between items-center">
@@ -230,7 +247,7 @@ export function PurchaseOrderFormModal({
               disabled={isLoading}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? '提交中...' : '提交'}
+              {isLoading ? '提交中...' : editingOrder ? '保存修改' : '提交'}
             </button>
           </div>
         </div>

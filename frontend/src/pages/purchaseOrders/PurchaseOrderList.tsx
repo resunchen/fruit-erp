@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePurchaseOrders } from '../../hooks/usePurchaseOrders';
+import { useSuppliers } from '../../hooks/useSuppliers';
 import { PurchaseOrderFormModal } from '../../components/purchaseOrders/PurchaseOrderFormModal';
 import { Table } from '../../components/ui/Table';
 import { Pagination } from '../../components/ui/Pagination';
@@ -8,6 +10,7 @@ import { STATUS_LABELS, STATUS_COLORS } from '../../types/purchaseOrder';
 import type { PurchaseOrder, PurchaseOrderFormData } from '../../types/purchaseOrder';
 
 export default function PurchaseOrderListPage() {
+  const navigate = useNavigate();
   const {
     orders,
     pagination,
@@ -18,11 +21,14 @@ export default function PurchaseOrderListPage() {
     deleteOrder,
   } = usePurchaseOrders();
 
+  const { suppliers, fetchSuppliers } = useSuppliers();
+
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<{ id: string; order_number: string } | null>(null);
 
   useEffect(() => {
     fetchOrders();
+    fetchSuppliers({ limit: 100 });
   }, []);
 
   const handleSearch = (search: string) => {
@@ -60,6 +66,11 @@ export default function PurchaseOrderListPage() {
     }
   };
 
+  const getSupplierName = (supplierId: string) => {
+    const supplier = suppliers.find((s) => s.id === supplierId);
+    return supplier?.name || '未知供应商';
+  };
+
   const columns = [
     {
       key: 'order_number',
@@ -70,10 +81,7 @@ export default function PurchaseOrderListPage() {
       key: 'supplier_id',
       title: '供应商',
       width: '20%',
-      render: (value: string) => {
-        // 如果后续API返回supplier_name，可以直接使用
-        return value;
-      },
+      render: (value: string) => getSupplierName(value),
     },
     {
       key: 'total_amount',
@@ -104,13 +112,13 @@ export default function PurchaseOrderListPage() {
       render: (_: any, record: PurchaseOrder) => (
         <div className="flex gap-2">
           <button
-            onClick={() => {}}
+            onClick={() => navigate(`/purchase-orders/${record.id}`)}
             className="text-blue-600 hover:text-blue-700 text-sm font-medium"
           >
             查看
           </button>
           <button
-            onClick={() => {}}
+            onClick={() => navigate(`/purchase-orders/${record.id}`)}
             className="text-blue-600 hover:text-blue-700 text-sm font-medium"
           >
             编辑
@@ -135,12 +143,20 @@ export default function PurchaseOrderListPage() {
             <h1 className="text-3xl font-bold text-gray-900">采购订单</h1>
             <p className="text-gray-600 mt-1">管理和维护采购订单</p>
           </div>
-          <button
-            onClick={handleCreateClick}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
-          >
-            + 新增订单
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => navigate('/purchase-orders/ai/create')}
+              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium"
+            >
+              🤖 AI 智能创建
+            </button>
+            <button
+              onClick={handleCreateClick}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
+            >
+              + 新增订单
+            </button>
+          </div>
         </div>
 
         {/* 搜索框 */}
@@ -167,10 +183,10 @@ export default function PurchaseOrderListPage() {
         )}
 
         {/* 表格 */}
-        <Table columns={columns} data={orders} loading={isLoading} />
+        <Table columns={columns} data={orders || []} loading={isLoading} />
 
         {/* 分页 */}
-        {orders.length > 0 && (
+        {orders && orders.length > 0 && (
           <Pagination
             current={pagination.page}
             total={pagination.total}
@@ -181,7 +197,7 @@ export default function PurchaseOrderListPage() {
         )}
 
         {/* 空状态 */}
-        {!isLoading && orders.length === 0 && !error && (
+        {!isLoading && (!orders || orders.length === 0) && !error && (
           <div className="text-center py-12">
             <svg
               className="mx-auto h-12 w-12 text-gray-400"
